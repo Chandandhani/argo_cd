@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: rollouts-demo-vsvc
+  namespace: prod
+spec:
+  hosts:
+    - dev.newenergy.com
+  gateways:
+    - rollout-gateway
+  http:
+    - name: primary
+      match:
+        - uri:
+            prefix: "/"   # match all paths
+      route:
+        - destination:
+            host: rollouts-demo-stable.prod.svc.cluster.local
+            port:
+              number: 80
+          weight: 100
+        - destination:
+            host: rollouts-demo-canary.prod.svc.cluster.local
+            port:
+              number: 80
+          weight: 0

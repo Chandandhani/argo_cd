@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: rollouts-demo
+  namespace: prod
+spec:
+  replicas: 3
+  strategy:
+    canary:
+      stableService: rollouts-demo-stable
+      canaryService: rollouts-demo-canary
+      trafficRouting:
+        istio:
+          virtualService:
+            name: rollouts-demo-vsvc
+            routes:
+              - primary
+      steps:
+        - setWeight: 5
+        - pause: {}
+        - setWeight: 20
+        - pause: {}
+        - setWeight: 100
+  selector:
+    matchLabels:
+      app: rollouts-demo
+  template:
+    metadata:
+      labels:
+        app: rollouts-demo
+    spec:
+      containers:
+        - name: rollouts-demo
+          image: argoproj/rollouts-demo:green
+          ports:
+            - containerPort: 8080

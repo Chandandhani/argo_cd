@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argo-rollouts-dashboard
+  namespace: argo-rollouts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argo-rollouts-dashboard
+  template:
+    metadata:
+      labels:
+        app: argo-rollouts-dashboard
+    spec:
+      containers:
+      - name: argo-rollouts-dashboard
+        image: quay.io/argoproj/argo-rollouts-dashboard:v1.8.3
+        args: ["--bind-address=0.0.0.0"]
+        ports:
+        - containerPort: 3100
+          name: http
+        imagePullPolicy: Always
