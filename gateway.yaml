@@ -19,6 +19,6 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: prod-newenergy-tls
+      credentialName: dev-newenergy-tls
     hosts:
     - dev.newenergy.com
