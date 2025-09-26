@@ -5,20 +5,20 @@ metadata:
   namespace: prod
 spec:
   selector:
-    istio: ingressgateway   # use Istio ingress gateway
+    istio: ingressgateway   # must match the label of Istio ingress gateway
   servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - dev.newenergy.com
-  - port:
-      number: 443
-      name: https
-      protocol: HTTPS
-    tls:
-      mode: SIMPLE
-      credentialName: dev-newenergy-tls
-    hosts:
-    - dev.newenergy.com
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - dev.newenergy.com
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      tls:
+        mode: SIMPLE
+        credentialName: dev-newenergy-tls  # must match secret in prod namespace
+      hosts:
+        - dev.newenergy.com
