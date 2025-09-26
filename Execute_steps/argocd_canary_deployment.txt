@@ -1,0 +1,23 @@
+Step-1 Create a rollout.yaml
+Step-2 Create 2 service rollouts-demo-stable and rollouts-demo-canary
+Step-4 Create a virtual service and add service name inside virtual service destination
+step-5 Add 2 service name and virtual service name inside rollout.yaml file 
+Step-6 Add step in rollout.yaml manual
+steps:
+        - setWeight: 5
+        - pause: {}     # manual pause
+        - setWeight: 20
+        - pause: {}     # manual pause
+        - setWeight: 100
+step-6 run below command to promot traffic  
+kubectl argo rollouts promote rollouts-demo -n prod
+step-7 To check argo rollout status 
+kubectl argo rollouts get rollout rollouts-demo -n prod
+step-8 For rollback
+kubectl argo rollouts undo rollouts-demo -n prod
+
+for argocd need to execute command 
+First need to exec 
+argocd app sync rollouts-demo
+then
+kubectl argo rollouts promote rollouts-demo -n prod
