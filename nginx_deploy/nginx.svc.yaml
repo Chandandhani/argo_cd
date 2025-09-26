@@ -13,7 +13,7 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: my_nginx_svc
+    app: nginx
   type: ClusterIP
 status:
   loadBalancer: {}
