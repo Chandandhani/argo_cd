@@ -3,8 +3,8 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: my_nginx_svc
-  name: my_nginx_svc
+    app: my-nginx-svc
+  name: my-nginx-svc
   namespace: dev
 spec:
   ports:
