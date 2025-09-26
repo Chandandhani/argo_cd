@@ -18,6 +18,8 @@ kubectl argo rollouts undo rollouts-demo -n prod
 
 for argocd need to execute command 
 First need to exec 
+it will auto sync if not then run below command
 argocd app sync rollouts-demo
 then
+
 kubectl argo rollouts promote rollouts-demo -n prod
