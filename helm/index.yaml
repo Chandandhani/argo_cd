@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  mychart:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-09-30T11:03:36.881920399Z"
+    description: A Helm chart for Kubernetes
+    digest: d6c770c12a4ddc2d1fe4f6d4e071cedbe9cae9e5605754904df32ad0f3d1f321
+    name: mychart
+    type: application
+    urls:
+    - https://github.com/Chandandhani/argo_cd.git/mychart-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-09-30T11:03:36.880530992Z"
