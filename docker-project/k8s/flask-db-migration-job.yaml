@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flask-db-migration
+  namespace: demo-app
+spec:
+  template:
+    spec:
+      containers:
+      - name: flask-db-migration
+        image: chandandhani7556/flask_backend_app:v1
+        command: ["python", "/scripts/db_migrate.py"]
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_DB
+        - name: DATABASE_URL
+          value: postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres:5432/$(POSTGRES_DB)
+        volumeMounts:
+        - name: migrate-script
+          mountPath: /scripts
+      restartPolicy: Never
+      volumes:
+      - name: migrate-script
+        configMap:
+          name: db-migrate-script
+  backoffLimit: 3
