@@ -11,5 +11,5 @@ sudo mv kubeseal /usr/local/bin/
 kubectl create secret generic postgres-secret   --namespace demo-app   --from-literal=POSTGRES_USER=user   --from-literal=POSTGRES_PASSWORD=password   --from-literal=POSTGRES_DB=mydb   --dry-run=client -o yaml > postgres-secret.yaml
 kubeseal --format yaml --namespace demo-app < postgres-secret.yaml > sealed-postgres-secret.yaml
 
-Need to create a configmap for database migration
+Need to create a configmap for database migration.
 kubectl create configmap db-migrate-script   --from-file=db_migrate.py   -n demo-app
