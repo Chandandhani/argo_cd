@@ -18,7 +18,7 @@ def home():
     visits = cache.incr("visits")
     
     return jsonify({
-        "message": "Welcome to the Flask App!",
+        "message": "Welcome to the Flask 2 App!",
         "visits": int(visits)
     })
 
