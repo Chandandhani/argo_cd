@@ -18,3 +18,4 @@ kubectl create configmap db-migrate-script   --from-file=db_migrate.py   -n demo
 ##############
 For GitOps deployment 
 Need to create a pv manually, Then sync repo to gitops.
+so that PV and PVC are commented.
