@@ -5,6 +5,8 @@ metadata:
   labels:
     app.kubernetes.io/part-of: autodeploy
     app.kubernetes.io/managed-by: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
   namespace: demo-app
 spec:
   capacity:
@@ -20,6 +22,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: postgres-pvc
   namespace: demo-app
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   accessModes:
     - ReadWriteOnce
