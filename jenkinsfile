@@ -1,0 +1,53 @@
+pipeline {
+    agent {
+        label 'slave'
+    }
+
+    stages {
+        stage('Hello') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/Chandandhani/argo_cd.git']])
+            }
+        }
+        stage('Docker build') {
+            steps {
+                sh '''
+                    cd docker-project
+                    docker-compose down --volumes --remove-orphans
+                    docker-compose build --no-cache
+                    docker tag docker-project_app:latest chandandhani7556/flask_backend_app:${BUILD_NUMBER}
+                '''
+            }
+        }
+        stage('Docker push') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'Docker_hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                     sh '''
+                        echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+                        docker push chandandhani7556/flask_backend_app:${BUILD_NUMBER}
+                '''
+                }
+            }
+        }
+    stage('Push to GitHub Docker Tag') {
+        steps {
+            withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                sh '''
+                    cd docker-project
+                    sed -i 's|image: chandandhani7556/flask_backend_app:.*|image: chandandhani7556/flask_backend_app:'"$BUILD_NUMBER"'|' k8s/flask-deployment.yaml
+                    git config user.email "chandan.dhani@gmail.com"
+                    git config user.name "chandandhani"
+                    git add k8s/flask-deployment.yaml
+                    git commit -m "Update flask_backend_app image tag to build $BUILD_NUMBER" || echo "No changes to commit"
+                    git push https://$USERNAME:$PASSWORD@github.com/Chandandhani/argo_cd.git HEAD:main
+                '''
+                }
+            }
+        }
+    }
+    post{
+        always{
+            cleanWs()
+        }
+    }
+}
