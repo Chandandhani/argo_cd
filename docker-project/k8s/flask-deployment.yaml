@@ -20,7 +20,6 @@ spec:
         ports:
         - containerPort: 5000
         env:
-        # Reference individual keys from the secret
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
