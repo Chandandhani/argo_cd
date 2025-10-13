@@ -14,3 +14,7 @@ kubeseal --format yaml --namespace demo-app < postgres-secret.yaml > sealed-post
 
 Need to create a configmap for database migration.
 kubectl create configmap db-migrate-script   --from-file=db_migrate.py   -n demo-app
+
+##############
+For GitOps deployment 
+Need to create a pv manually, Then sync repo to gitops.
