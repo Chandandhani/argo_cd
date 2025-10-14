@@ -21,17 +21,5 @@ jobs:
       - name: Build and run containers
         run: |
           docker-compose down --volumes --remove-orphans
-          docker-compose up --build -d
-
-      - name: Show running containers
-        run: docker ps
-
-      - name: Run tests (optional)
-        run: |
-          # You can run curl, test scripts, etc.
-          echo "Tests can go here"
-
-      - name: Shut down
-        if: always()
-        run: docker-compose down
+          docker-compose build --no-cache
 
