@@ -12,6 +12,10 @@ kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/latest/
 kubectl create secret generic postgres-secret   --namespace demo-app   --from-literal=POSTGRES_USER=user   --from-literal=POSTGRES_PASSWORD=password   --from-literal=POSTGRES_DB=mydb   --dry-run=client -o yaml > postgres-secret.yaml
 kubeseal --format yaml --namespace demo-app < postgres-secret.yaml > sealed-postgres-secret.yaml
 
+
+to create configmap for nginx config and index.html
+kubectl create configmap nginx-config   --from-file=nginx.conf=web/nginx.conf   -n demo-app
+kubectl create configmap nginx-html   --from-file=web/html/index.html   -n demo-app
 Need to create a configmap for database migration.
 kubectl create configmap db-migrate-script   --from-file=db_migrate.py   -n demo-app
 
