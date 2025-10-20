@@ -12,6 +12,9 @@ kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/latest/
 kubectl create secret generic postgres-secret   --namespace demo-app   --from-literal=POSTGRES_USER=user   --from-literal=POSTGRES_PASSWORD=password   --from-literal=POSTGRES_DB=mydb   --dry-run=client -o yaml > postgres-secret.yaml
 kubeseal --format yaml --namespace demo-app < postgres-secret.yaml > sealed-postgres-secret.yaml
 
+##### Need to create namespace for argo-rollouts
+kubectl create namespace argo-rollouts
+kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
 
 to create configmap for nginx config and index.html
 kubectl create configmap nginx-config   --from-file=nginx.conf=web/nginx.conf   -n demo-app
