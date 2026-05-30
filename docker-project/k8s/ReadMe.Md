@@ -11,6 +11,8 @@ sudo mv kubeseal /usr/local/bin/
 kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/latest/download/controller.yaml
 kubectl create secret generic postgres-secret   --namespace demo-app   --from-literal=POSTGRES_USER=user   --from-literal=POSTGRES_PASSWORD=password   --from-literal=POSTGRES_DB=mydb   --dry-run=client -o yaml > postgres-secret.yaml
 kubeseal --format yaml --namespace demo-app < postgres-secret.yaml > sealed-postgres-secret.yaml
+kubectl apply -f sealed-postgres-secret.yaml
+### It will create both postgres-secret and sealedsecret.bitnami.com
 
 ##### Need to create namespace for argo-rollouts
 kubectl create namespace argo-rollouts
